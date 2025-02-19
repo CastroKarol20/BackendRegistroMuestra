@@ -5,8 +5,6 @@ export const obtenerMuestras = async (req, res) => {
     try {
         let filtros = {};
 
-        if (req.query.cedula_cliente) filtros.cedula_cliente = req.query.cedula_cliente;
-        if (req.query.tipo_agua) filtros.tipo_agua = req.query.tipo_agua;
         if (req.query.especificar_tipo_agua) filtros.especificar_tipo_agua = req.query.especificar_tipo_agua;
         if (req.query.id_muestra) filtros.id_muestra = req.query.id_muestra;
         if (req.query.tipo_muestreo) filtros.tipo_muestreo = req.query.tipo_muestreo;
