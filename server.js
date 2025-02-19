@@ -17,12 +17,6 @@ app.use(express.json());
 import muestrasRoutes from './routes/muestras.js';
 app.use('/muestras', muestrasRoutes);
 
-// Middleware para manejar errores
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({ mensaje: "Algo salió mal en el servidor", error: err.message });
-});
-
 // Ruta de prueba
 app.get('/', (req, res) => {
     res.send('API funcionando correctamente');

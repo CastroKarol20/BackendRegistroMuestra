@@ -1,23 +1,27 @@
-import express from'express';
+import express from 'express';
+import { 
+    obtenerMuestras, 
+    obtenerMuestraPorId,
+    registrarMuestra, 
+    actualizarMuestra, 
+    eliminarMuestra
+} from '../controllers/muestrasController.js';
+
 const router = express.Router();
-import Muestra from'../models/Muestra.js';
 
-router.post('/registrar', async (req, res) => {
-    try {
-        const { tipo_muestreo, analisis_realizar } = req.body;
+// 📌 Registrar una nueva muestra
+router.post('/registrar', registrarMuestra);
 
-        if (!tipo_muestreo || !analisis_realizar || !Array.isArray(analisis_realizar)) {
-            return res.status(400).json({ message: "Todos los campos son obligatorios y 'analisis_realizar' debe ser un array." });
-        }
+// 📌 Obtener todas las muestras
+router.get('/', obtenerMuestras);
 
-        const nuevaMuestra = new Muestra({ tipo_muestreo, analisis_realizar });
+// 📌 Obtener una muestra por ID
+router.get('/:id', obtenerMuestraPorId);
 
-        await nuevaMuestra.save();
-        return res.status(201).json({ message: "Muestra registrada con éxito", muestra: nuevaMuestra });
+// 📌 Actualizar una muestra
+router.put('/:id', actualizarMuestra);
 
-    } catch (error) {
-        console.error("Error al registrar muestra:", error);
-        return res.status(500).json({ message: "Error interno del servidor", error: error.message });
-    }
-})
+// 📌 Eliminar una muestra
+router.delete('/:id', eliminarMuestra);
+
 export default router;
