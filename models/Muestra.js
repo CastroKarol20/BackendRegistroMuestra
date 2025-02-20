@@ -9,8 +9,8 @@ const opcionesAnalisis = [
 ];
 
 const MuestraSchema = new mongoose.Schema({
-    id_muestra: { type: String, unique: true },
-    documento_usuario: { type: String, required: true, match: /^\d{5,15}$/ },
+    id_muestra: { type: String, unique: true },  
+    documento_cliente: { type: String, required: true, match: /^\d{5,15}$/ },  // 🔹 Cambiado de documento_usuario a documento_cliente
     fecha_hora: { type: Date, required: true },
     tipo_muestreo: { type: String, required: true },
     analisis_realizar: { 
@@ -25,7 +25,7 @@ const MuestraSchema = new mongoose.Schema({
     }
 });
 
-// 📌 🔥 Nueva forma de generar `id_muestra` evitando duplicados
+// 📌 🔥 Nueva generación de `id_muestra` evitando duplicados
 MuestraSchema.pre('save', async function(next) {
     try {
         if (!this.id_muestra) {
