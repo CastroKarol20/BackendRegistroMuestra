@@ -1,27 +1,27 @@
 import express from 'express';
 import { 
-    obtenerMuestras, 
-    obtenerMuestraPorId,
     registrarMuestra, 
+    obtenerMuestras, 
+    obtenerMuestraPorId, 
     actualizarMuestra, 
-    eliminarMuestra
+    eliminarMuestra 
 } from '../controllers/muestrasController.js';
 
 const router = express.Router();
 
-// 📌 Registrar una nueva muestra
+// 📌 ✅ Registrar una nueva muestra (POST)
 router.post('/registrar', registrarMuestra);
 
-// 📌 Obtener todas las muestras
+// 📌 ✅ Obtener todas las muestras (GET)
 router.get('/', obtenerMuestras);
 
-// 📌 Obtener una muestra por ID
+// 📌 ✅ Obtener una muestra por ID (GET)
 router.get('/:id', obtenerMuestraPorId);
 
-// 📌 Actualizar una muestra
+// 📌 ✅ Actualizar una muestra por ID (PUT)
 router.put('/:id', actualizarMuestra);
 
-// 📌 Eliminar una muestra
+// 📌 ✅ Eliminar una muestra por ID (DELETE)
 router.delete('/:id', eliminarMuestra);
 
 export default router;
