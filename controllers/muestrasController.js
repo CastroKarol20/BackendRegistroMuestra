@@ -38,11 +38,10 @@ export const registrarMuestra = async (req, res) => {
     }
 };
 
-// Obtener una muestra por su ID
 export const obtenerMuestraPorId = async (req, res) => {
     try {
-        const { id_muestra } = req.params; // Obtiene el parámetro de la URL
-        const muestra = await Muestra.findOne({ id_muestra });
+        const { id } = req.params; // Obtiene el ID de la URL
+        const muestra = await Muestra.findById(id); // Busca por `_id`
 
         if (!muestra) {
             return res.status(404).json({ mensaje: "Muestra no encontrada" });
@@ -55,32 +54,34 @@ export const obtenerMuestraPorId = async (req, res) => {
 };
 
 
-// 3️⃣ Actualizar una muestra por `id_muestra`
+
 export const actualizarMuestra = async (req, res) => {
     try {
-        const muestra = await Muestra.findOneAndUpdate(
-            { id_muestra: req.params.id_muestra },
-            req.body,
-            { new: true }
-        );
+        const { id } = req.params;
+        const muestraActualizada = await Muestra.findByIdAndUpdate(id, req.body, { new: true });
 
-        if (!muestra) return res.status(404).json({ mensaje: "Muestra no encontrada" });
+        if (!muestraActualizada) {
+            return res.status(404).json({ mensaje: "Muestra no encontrada" });
+        }
 
-        res.json({ mensaje: "Muestra actualizada exitosamente", data: muestra });
+        res.json({ mensaje: "Muestra actualizada exitosamente", data: muestraActualizada });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ mensaje: "Error al actualizar la muestra", error: error.message });
     }
 };
 
-// 4️⃣ Eliminar una muestra por `id_muestra`
 export const eliminarMuestra = async (req, res) => {
     try {
-        const muestra = await Muestra.findOneAndDelete({ id_muestra: req.params.id_muestra });
+        const { id } = req.params;
+        const muestraEliminada = await Muestra.findByIdAndDelete(id);
 
-        if (!muestra) return res.status(404).json({ mensaje: "Muestra no encontrada" });
+        if (!muestraEliminada) {
+            return res.status(404).json({ mensaje: "Muestra no encontrada" });
+        }
 
         res.json({ mensaje: "Muestra eliminada exitosamente" });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ mensaje: "Error al eliminar la muestra", error: error.message });
     }
 };
+

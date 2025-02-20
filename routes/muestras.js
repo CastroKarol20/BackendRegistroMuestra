@@ -10,9 +10,9 @@ import {
 const router = express.Router();
 
 router.get('/', obtenerMuestras); // Obtener todas las muestras
-router.get('/:id_muestra', obtenerMuestraPorId); // 🔹 Nueva ruta para obtener una muestra por ID
+router.get('/:id', obtenerMuestraPorId); // 🔹 Nueva ruta para obtener una muestra por ID
 router.post('/registrar', registrarMuestra);
-router.put('/id/:id_muestra', actualizarMuestra);
-router.delete('/id/:id_muestra', eliminarMuestra);
+router.put('/:id', actualizarMuestra);
+router.delete('/:id', eliminarMuestra);
 
 export default router;
