@@ -5,22 +5,22 @@ export const obtenerMuestras = async (req, res) => {
     try {
         let filtros = {};
 
-        if (req.query.documento_cliente) filtros.documento_cliente = req.query.documento_cliente;  // 🔹 Cambio aquí
+        if (req.query.documento) filtros.documento = req.query.documento;  // 🔹 Cambio aquí
         if (req.query.id_muestra) filtros.id_muestra = req.query.id_muestra;
-        if (req.query.tipo_muestreo) filtros.tipo_muestreo = req.query.tipo_muestreo;
+        if (req.query.tipoMuestreo) filtros.tipoMuestreo = req.query.tipoMuestreo;  // 🔹 Cambio aquí
 
-        if (req.query.analisis_realizar) {
-            filtros.analisis_realizar = { $in: [req.query.analisis_realizar] };
+        if (req.query.analisisSeleccionados) {  // 🔹 Cambio aquí
+            filtros.analisisSeleccionados = { $in: [req.query.analisisSeleccionados] };
         }
 
-        if (req.query.fecha_inicio && req.query.fecha_fin) {
-            filtros.fecha_hora = { 
-                $gte: new Date(req.query.fecha_inicio), 
-                $lte: new Date(req.query.fecha_fin) 
+        if (req.query.fechaInicio && req.query.fechaFin) {  // 🔹 Cambio aquí
+            filtros.fechaHora = { 
+                $gte: new Date(req.query.fechaInicio),  // 🔹 Cambio de fecha_hora → fechaHora
+                $lte: new Date(req.query.fechaFin) 
             };
         }
 
-        const muestras = await Muestra.find(filtros).sort({ fecha_hora: -1 });
+        const muestras = await Muestra.find(filtros).sort({ fechaHora: -1 });  // 🔹 Cambio aquí
         res.status(200).json(muestras);
     } catch (err) {
         res.status(500).json({ mensaje: "Error al obtener muestras", error: err.message });

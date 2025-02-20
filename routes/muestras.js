@@ -1,28 +1,18 @@
 import express from 'express';
 import { 
-    registrarMuestra, 
     obtenerMuestras, 
-    obtenerMuestraPorId, 
+    obtenerMuestraPorId,  // 🔹 Se importa la nueva función
+    registrarMuestra, 
     actualizarMuestra, 
     eliminarMuestra 
 } from '../controllers/muestrasController.js';
 
 const router = express.Router();
 
-// 📌 ✅ Registrar una nueva muestra (POST) - VA PRIMERO PARA EVITAR CONFLICTOS
+router.get('/', obtenerMuestras); // Obtener todas las muestras
+router.get('/:id_muestra', obtenerMuestraPorId); // 🔹 Nueva ruta para obtener una muestra por ID
 router.post('/registrar', registrarMuestra);
-
-// 📌 ✅ Obtener todas las muestras (GET)
-router.get('/', obtenerMuestras);
-
-// 📌 ✅ Obtener una muestra por ID (GET)
-router.get('/muestra/:id', obtenerMuestraPorId); // 👈 ¡Ruta específica para evitar el error!
-
-// 📌 ✅ Actualizar una muestra por ID (PUT)
-router.put('/muestra/:id', actualizarMuestra);
-
-// 📌 ✅ Eliminar una muestra por ID (DELETE)
-router.delete('/muestra/:id', eliminarMuestra);
+router.put('/id/:id_muestra', actualizarMuestra);
+router.delete('/id/:id_muestra', eliminarMuestra);
 
 export default router;
-
