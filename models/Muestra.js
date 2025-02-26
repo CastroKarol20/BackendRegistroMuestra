@@ -5,15 +5,18 @@ const opcionesAnalisis = [
     "Cloro Residual", "Cloro Total", "Cloruros", "Cobalto", "Cobre", 
     "Color Aparente", "Color Real", "Conductividad", "Cromo", 
     "Demanda Química De Oxígeno", "Dureza Cálcica", "Dureza Magnésica", "Dureza Total",
-    "pH", "OTRO"
+    "pH","Ortofosfatos", "Fósforo Total","Hierro","Magnesio","Manganeso","Mercurio","Molibdeno",
+    "Níquel","Nitratos", "Nitritos", "Nitrógeno Amoniacal","Nitrógeno Total","Oxígeno Disuelto",
+    "Plata","Plomo","Potasio", "Sólidos Sedimentables","Sólidos Suspendidos", "Sólidos Totales",
+    "Sulfatos", "Turbiedad","Yodo","Zinc", "OTRO"
 ];
 
 const MuestraSchema = new mongoose.Schema({
     id_muestra: { type: String, unique: true },
-    documento: { type: String, required: true, match: /^\d{5,15}$/ },  // 🔹 Cambio de documento_cliente → documento
-    fechaHora: { type: Date, required: true },  // 🔹 Cambio de fecha_hora → fechaHora
-    tipoMuestreo: { type: String, required: true },  // 🔹 Cambio de tipo_muestreo → tipoMuestreo
-    analisisSeleccionados: {  // 🔹 Cambio de analisis_realizar → analisisSeleccionados
+    documento: { type: String, required: true, match: /^\d{5,15}$/ },  //  Cambio de documento_cliente → documento
+    fechaHora: { type: Date, required: true },  //  Cambio de fecha_hora → fechaHora
+    tipoMuestreo: { type: String, required: true },  //  Cambio de tipo_muestreo → tipoMuestreo
+    analisisSeleccionados: {  //  Cambio de analisis_realizar → analisisSeleccionados
         type: [String], 
         required: true,
         validate: {
@@ -25,7 +28,7 @@ const MuestraSchema = new mongoose.Schema({
     }
 });
 
-// 📌 Generar ID único automáticamente antes de guardar
+//  Generar ID único automáticamente antes de guardar
 MuestraSchema.pre('save', async function(next) {
     try {
         if (!this.id_muestra) {

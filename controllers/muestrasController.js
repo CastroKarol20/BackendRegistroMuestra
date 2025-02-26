@@ -1,33 +1,33 @@
 import Muestra from '../models/Muestra.js';
 
-// 1️⃣ Obtener todas las muestras con filtros
+// 1️ Obtiene todas las muestras con filtros
 export const obtenerMuestras = async (req, res) => {
     try {
         let filtros = {};
 
-        if (req.query.documento) filtros.documento = req.query.documento;  // 🔹 Cambio aquí
+        if (req.query.documento) filtros.documento = req.query.documento;  //  Cambio aquí
         if (req.query.id_muestra) filtros.id_muestra = req.query.id_muestra;
-        if (req.query.tipoMuestreo) filtros.tipoMuestreo = req.query.tipoMuestreo;  // 🔹 Cambio aquí
+        if (req.query.tipoMuestreo) filtros.tipoMuestreo = req.query.tipoMuestreo;  //  Cambio aquí
 
-        if (req.query.analisisSeleccionados) {  // 🔹 Cambio aquí
+        if (req.query.analisisSeleccionados) {  //  Cambio aquí
             filtros.analisisSeleccionados = { $in: [req.query.analisisSeleccionados] };
         }
 
-        if (req.query.fechaInicio && req.query.fechaFin) {  // 🔹 Cambio aquí
+        if (req.query.fechaInicio && req.query.fechaFin) {  // Cambio aquí
             filtros.fechaHora = { 
-                $gte: new Date(req.query.fechaInicio),  // 🔹 Cambio de fecha_hora → fechaHora
+                $gte: new Date(req.query.fechaInicio),  //  Cambio de fecha_hora → fechaHora
                 $lte: new Date(req.query.fechaFin) 
             };
         }
 
-        const muestras = await Muestra.find(filtros).sort({ fechaHora: -1 });  // 🔹 Cambio aquí
+        const muestras = await Muestra.find(filtros).sort({ fechaHora: -1 });  //  Cambio aquí
         res.status(200).json(muestras);
     } catch (err) {
         res.status(500).json({ mensaje: "Error al obtener muestras", error: err.message });
     }
 };
 
-// 2️⃣ Registrar una nueva muestra
+// 2️ Registrar una nueva muestra
 export const registrarMuestra = async (req, res) => {
     try {
         const nuevaMuestra = new Muestra(req.body);
